@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# 0 = West ,1 = North , 2 = East, 3 = South
+
 class Robot # :nodoc:
   MAX_X = 4
   MAX_Y = 4
@@ -11,7 +13,6 @@ class Robot # :nodoc:
   }.freeze
 
   def initialize
-    # 0 = West ,1 = North , 2 = East, 3 = South
     @position_x = 0
     @position_y = 0
     @heading = 0
