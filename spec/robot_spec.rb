@@ -42,7 +42,6 @@ describe Robot do
     expect(y).to eq 3
   end
 
-
   it 'should move RIGHT on the X axis one unit facing EAST correctly' do
     r = Robot.new
     r.place(0, 1, 'EAST')
@@ -98,6 +97,22 @@ describe Robot do
   describe '#get_heading' do
     it 'should give the default heading of the robot WEST ' do
       expect(subject.get_heading).to eq 'WEST'
+    end
+  end
+
+  describe "#jump" do
+    it "should jump but not out of boundaries" do
+      r = Robot.new
+      r.place(0, 0, 'NORTH')
+      r.jump
+      expect(r.position).to eq [0, 2]
+    end
+
+    it 'should not jump out of boundaries' do
+      r = Robot.new
+      r.place(1, 2 , 'WEST')
+      r.jump
+      expect(r.position).to eq [1, 2]
     end
   end
 end

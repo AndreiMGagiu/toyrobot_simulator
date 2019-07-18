@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# 0 = West ,1 = North , 2 = East, 3 = South
-
 class Robot # :nodoc:
   MAX_X = 4
   MAX_Y = 4
@@ -20,6 +18,10 @@ class Robot # :nodoc:
   end
 
   def place(x, y, h)
+    raise 'Invalid placement: Out of boundaries' if x < 0 || x > MAX_X
+
+    raise 'Invalid placement: Out of boundaries' if y < 0 || y > MAX_Y
+
     @position_x = x
     @position_y = y
 
@@ -31,20 +33,20 @@ class Robot # :nodoc:
     return false unless @placed
 
     case @heading
-    when 0 # west
-      raise 'Invalid Move' if @position_x.zero?
+    when DIRECTIONS # west
+      raise 'Invalid Move: Out of boundaries' if @position_x.zero?
 
       @position_x -= 1
     when 1 # NORTH
-      raise 'Invalid Move' if @position_y == MAX_Y
+      raise 'Invalid Move: Out of boundaries' if @position_y == MAX_Y
 
       @position_y += 1
     when 2 # EAST
-      raise 'Invalid Move' if @position_x == MAX_X
+      raise 'Invalid Move: Out of boundaries' if @position_x == MAX_X
 
       @position_x += 1
     when 3 # SOUTH
-      raise 'Invalid Move' if @position_y.zero?
+      raise 'Invalid Move: Out of boundaries' if @position_y.zero?
 
       @position_y -= 1
     end
@@ -70,5 +72,29 @@ class Robot # :nodoc:
 
   def position
     [@position_x, @position_y]
+  end
+
+  def jump
+    return false unless @placed
+
+    case @heading
+    when DIRECTIONS # west
+      raise 'Invalid Move: Out of boundaries' if @position_x < 0
+
+      @position_x -= 2
+    when 1 # NORTH
+      raise 'Invalid Move: Out of boundaries' if @position_y > MAX_Y - 2
+
+      @position_y += 2
+    when 2 # EAST
+      raise 'Invalid Move: Out of boundaries' if @position_x > MAX_X - 2
+
+      @position_x += 2
+    when 3 # SOUTH
+      raise 'Invalid Move: Out of boundaries' if @position_y < MAX_Y - 2
+
+      @position_y -= 2
+    end
+    true
   end
 end
